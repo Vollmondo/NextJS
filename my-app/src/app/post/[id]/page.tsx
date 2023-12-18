@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { stringify } from 'querystring'
 import React from 'react'
+import Post from '@/app/components/Post'
 
 async function fetchPost(id:string) {
   const res = await fetch('https://jsonplaceholder.typicode.com/posts/'+id)
@@ -8,22 +9,18 @@ async function fetchPost(id:string) {
   return result
 }
 
-export default async function Post(
+export default async function PagePost(
   params: {
     params: { 
       id:string
     }
   }
 ) {
-  console.log(params.params.id)
-
-  const posts = await fetchPost(params.params.id)
+  const post = await fetchPost(params.params.id)
 
   return (
     <div>
-        <Link href={'/'}>Назад</Link>
-        <h1>{posts.title}</h1>
-        <p>{posts.body}</p>
+        <Post post={post}/>
     </div>
   )
 }
